@@ -34,3 +34,21 @@ C:\Users\POSITO\Desktop\Fisobed_fixed\Fisobed v2\bin\Debug\net48\PUBLIC-Assembly
 C:\Users\POSITO\Desktop\Fisobed_fixed\Fisobed v2\bin\Debug\net48\UnityEngine.CoreModule.dll
 C:\Users\POSITO\Desktop\Fisobed_fixed\Fisobed v2\bin\Debug\net48\UnityEngine.dll
 C:\Users\POSITO\Desktop\Fisobed_fixed\Fisobed v2\obj\Debug\net48\Fisobed v2.csproj.CopyComplete
+C:\Users\POSITO\Desktop\bro\Fisobed v2\bin\Debug\net48\Fisobed v2.dll
+C:\Users\POSITO\Desktop\bro\Fisobed v2\bin\Debug\net48\Fisobed v2.pdb
+C:\Users\POSITO\Desktop\bro\Fisobed v2\bin\Debug\net48\BepInEx.dll
+C:\Users\POSITO\Desktop\bro\Fisobed v2\bin\Debug\net48\Fisobs.dll
+C:\Users\POSITO\Desktop\bro\Fisobed v2\bin\Debug\net48\HOOKS-Assembly-CSharp.dll
+C:\Users\POSITO\Desktop\bro\Fisobed v2\bin\Debug\net48\Mono.Cecil.dll
+C:\Users\POSITO\Desktop\bro\Fisobed v2\bin\Debug\net48\MonoMod.Utils.dll
+C:\Users\POSITO\Desktop\bro\Fisobed v2\bin\Debug\net48\PUBLIC-Assembly-CSharp.dll
+C:\Users\POSITO\Desktop\bro\Fisobed v2\bin\Debug\net48\UnityEngine.CoreModule.dll
+C:\Users\POSITO\Desktop\bro\Fisobed v2\bin\Debug\net48\UnityEngine.dll
+C:\Users\POSITO\Desktop\bro\Fisobed v2\obj\Debug\net48\Fisobed v2.csproj.AssemblyReference.cache
+C:\Users\POSITO\Desktop\bro\Fisobed v2\obj\Debug\net48\Fisobed v2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\POSITO\Desktop\bro\Fisobed v2\obj\Debug\net48\Fisobed v2.AssemblyInfoInputs.cache
+C:\Users\POSITO\Desktop\bro\Fisobed v2\obj\Debug\net48\Fisobed v2.AssemblyInfo.cs
+C:\Users\POSITO\Desktop\bro\Fisobed v2\obj\Debug\net48\Fisobed v2.csproj.CoreCompileInputs.cache
+C:\Users\POSITO\Desktop\bro\Fisobed v2\obj\Debug\net48\Fisobed v2.csproj.CopyComplete
+C:\Users\POSITO\Desktop\bro\Fisobed v2\obj\Debug\net48\Fisobed v2.dll
+C:\Users\POSITO\Desktop\bro\Fisobed v2\obj\Debug\net48\Fisobed v2.pdb

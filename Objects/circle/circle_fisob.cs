@@ -31,6 +31,7 @@ using static MoreSlugcats.SingularityBomb;
 using System.Reflection;
 using MoreSlugcats;
 using HUD;
+using Fisobed_v2;
 
 using circle;
 
@@ -45,13 +46,13 @@ namespace idks
         public circle_fisob() : base(_enum.enum_.AbstractObjectType.circle_object)
         {
 
-            Icon = new SimpleIcon(Circle.circle_icon, new Color(255, 255, 255));    //color
+            Icon = new SimpleIcon(Fisobed_v2.Plugin.ION, new Color(255, 255, 255));    //color
 
             RegisterUnlock(_enum.enum_.SandboxUnlock.circle_sandbox);     //register the Sandbox unlock
 
         }
 
-        public override AbstractPhysicalObject Parse(World world, EntitySaveData entitySaveData, Fisobs.Sandbox.SandboxUnlock? unlock)
+        public override AbstractPhysicalObject Parse(World world, EntitySaveData entitySaveData, Fisobs.Sandbox.SandboxUnlock unlock)
         {
 
             var abs = new circle_abstract(world, entitySaveData.Pos, entitySaveData.ID);    //var for the Abstract
@@ -60,8 +61,6 @@ namespace idks
         }
 
         private static readonly circle_property circle_properties = new();   //new [ circle_property ]
-
-        public override ItemProperties Properties(PhysicalObject forObject) => circle_properties;
 
         public class Unlocks
         {

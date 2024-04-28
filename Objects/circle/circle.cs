@@ -15,6 +15,8 @@ using Fisobs.Items;
 using Fisobs.Properties;
 using MoreSlugcats;
 using System.IO;
+using Fisobed_v2;
+using System;
 
 #endregion
 
@@ -27,8 +29,6 @@ namespace circle
         private Vector2 rotation;
         private Vector2 lastRotation;
         private Vector2? setRotation;
-
-        public static string circle_icon = Path.Combine("icon", "item_circle_icon");
 
         public Circle(AbstractPhysicalObject abstractPhysicalObject, Vector2 lastRotation = default, Vector2 rotation = default, Vector2? setRotation = null) : base(abstractPhysicalObject)
         {
@@ -48,6 +48,8 @@ namespace circle
             SetLastRotation(lastRotation);
             SetRotation(rotation);
             SetSetRotation(setRotation);
+
+            Debug.Log("---->  public Circle actived, maybe? idk, ask for it.");
 
         }
 
@@ -87,7 +89,7 @@ namespace circle
         {
 
             sLeaser.sprites = new FSprite[1];
-            sLeaser.sprites[0] = new FSprite(circle_icon, true);
+            sLeaser.sprites[0] = new FSprite(Fisobed_v2.Plugin.ION, true);
             AddToContainer(sLeaser, rCam, null);    //why, bro
 
         }
@@ -109,26 +111,26 @@ namespace circle
 
             }
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < Math.Min(4, sLeaser.sprites.Length); i++)
             {
 
                 sLeaser.sprites[i].x = vector.x - camPos.x;
                 sLeaser.sprites[i].y = vector.y - camPos.y;
                 sLeaser.sprites[i].rotation = Custom.VecToDeg(v);
-                sLeaser.sprites[0].element = Futile.atlasManager.GetElementWithName(circle_icon);
+                sLeaser.sprites[0].element = Futile.atlasManager.GetElementWithName(Fisobed_v2.Plugin.ION);
 
             }
 
             if (blink > 0 && Random.value < 0.5f)
             {
 
-                sLeaser.sprites[1].color = blinkColor;
+                sLeaser.sprites[0].color = blinkColor;
 
             }
             else
             {
 
-                sLeaser.sprites[1].color = color;
+                sLeaser.sprites[0].color = color;                       //sus
 
             }
 

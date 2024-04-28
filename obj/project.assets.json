@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\POSITO\\Desktop\\Fisobed_fixed\\Fisobed v2\\Fisobed v2.csproj",
+      "projectUniqueName": "C:\\Users\\POSITO\\Desktop\\bro\\Fisobed v2\\Fisobed v2.csproj",
       "projectName": "Fisobed v2",
-      "projectPath": "C:\\Users\\POSITO\\Desktop\\Fisobed_fixed\\Fisobed v2\\Fisobed v2.csproj",
+      "projectPath": "C:\\Users\\POSITO\\Desktop\\bro\\Fisobed v2\\Fisobed v2.csproj",
       "packagesPath": "C:\\Users\\POSITO\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\POSITO\\Desktop\\Fisobed_fixed\\Fisobed v2\\obj\\",
+      "outputPath": "C:\\Users\\POSITO\\Desktop\\bro\\Fisobed v2\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\POSITO\\AppData\\Roaming\\NuGet\\NuGet.Config",
