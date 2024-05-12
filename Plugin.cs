@@ -3,11 +3,12 @@ using BepInEx.Logging;
 using UnityEngine;
 using System.IO;
 using System;
-using _enum;
 using circle;
 using help;
+using sait;
+using System.Collections.Generic;
 
-namespace Fisobed_v2
+namespace main
 {
 
     [BepInPlugin(PLUGIN_GUID, PLUGIN_NAME, PLUGIN_VERSION)]
@@ -20,19 +21,30 @@ namespace Fisobed_v2
 
         public static new ManualLogSource Logger { get; private set; }
         public static string ION;
+        public static string SAITION;
 
         public void OnEnable()
         {
 
+            //base
+
             Logger = base.Logger;                                                   //logger
             On.RainWorld.OnModsInit += RainWorld_OnModsInit;                        //logs on the initialize.
+            
+            //circle
+
             On.MultiplayerUnlocks.ctor += ctor_ctor;                                //? [ circle ]
             On.RainWorld.Awake += awake;                                            //? [ circle ]
             On.MultiplayerUnlocks.SandboxItemUnlocked += ahh;                       //? [ circle ]
             On.RainWorld.OnModsInit += load_image;                                  //load the image before this thing can be used
             On.ItemSymbol.SpriteNameForItem += sprite_name_for_item_RRRRRRRR;       //maybe add the icon, but
             On.SandboxGameSession.SpawnItems += spawn_circle;                       //autoexplain name
-            On.Player.Grabability += grab_the_crap;
+            On.Player.Grabability += grab_the_crap;                                 //grab this crap for nothing!
+
+            //sait
+
+            On.StaticWorld.InitCustomTemplates += init_custom_template;
+            On.MultiplayerUnlocks.SandboxItemUnlocked += unlock_sait;
 
         }
 
@@ -45,7 +57,6 @@ namespace Fisobed_v2
             orig(self);
 
             Logger.LogInfo("its actived? great ----------------------------");
-            Logger.LogError("its actived? great ----------------------------");
             Logger.LogWarning("its actived? great ----------------------------");
             Debug.Log("Its actived? Great -----------------------------");
 
@@ -59,7 +70,7 @@ namespace Fisobed_v2
         {
 
             orig(self);                                                                                 //call the orig before of all
-            ION = Path.Combine("icons", "item_circle_icon");                                     //a string variable for specify the path. WAS A HELL FOR THIS IMAGE WORK
+            ION = Path.Combine("icons", "item_circle_icon");                                            //a string variable for specify the path. WAS A HELL FOR THIS IMAGE WORK
 
             try                                                                                             //if it works
             {
@@ -94,6 +105,9 @@ namespace Fisobed_v2
         }
 
         #endregion
+
+        #region circle object
+
         #region sprite_name_for_item_RRRRRRRR
 
         //maybe this thing can add the icon, idk
@@ -102,7 +116,7 @@ namespace Fisobed_v2
 
             string icon_name = ION;
 
-            if (itemType == _enum.enum_.AbstractObjectType.circle_object)       //if item type its equal of [ circle_abstract ]
+            if (itemType == enums.AbstractObjectType.obj_circle)       //if item type its equal of [ circle_abstract ]
             {
 
                 Logger.LogInfo("AirFryer DETECTED: ");                          //log
@@ -121,7 +135,7 @@ namespace Fisobed_v2
         private bool ahh(On.MultiplayerUnlocks.orig_SandboxItemUnlocked orig, MultiplayerUnlocks self, MultiplayerUnlocks.SandboxUnlockID unlockID)
         {
 
-            var locked = _enum.enum_.SandboxUnlock.circle_sandbox;              //variable that makes refernece of the SandboxUnlock
+            var locked = enums.SandboxUnlock.un_circle;              //variable that makes refernece of the SandboxUnlock
 
             if (unlockID == locked)                                             //if this [ unlockedID ] its equal to [ locked ]
             {
@@ -143,7 +157,7 @@ namespace Fisobed_v2
 
             var absObj_value = AbstractPhysicalObject.AbstractObjectType.values;                                //Abstract values
 
-            if (absObj_value.entries.Contains(_enum.enum_.AbstractObjectType.circle_object.value))              //if the absValue contains the value of [ circle_object]  
+            if (absObj_value.entries.Contains(enums.AbstractObjectType.obj_circle.value))              //if the absValue contains the value of [ circle_object]  
             {
 
                 Logger.LogInfo("absObj_value " + absObj_value);                                                 //log
@@ -152,7 +166,7 @@ namespace Fisobed_v2
 
             //log these too
             int valueTypeCount = absObj_value.Count;
-            int circle_UnlockIDIndex = (int)MultiplayerUnlocks.SymbolDataForSandboxUnlock(_enum.enum_.SandboxUnlock.circle_sandbox).itemType;
+            int circle_UnlockIDIndex = (int)MultiplayerUnlocks.SymbolDataForSandboxUnlock(enums.SandboxUnlock.un_circle).itemType;
 
             circle_UnlockIDIndex = 49;
 
@@ -172,27 +186,27 @@ namespace Fisobed_v2
 
             orig(self);     //CALLS THIS ORIG BEFORE THE LIST
 
-            var l_circle_san = _enum.enum_.SandboxUnlock.circle_sandbox;                //variable for store the enum [ circle ] Sandbox
-            var l_circle_abs = _enum.enum_.AbstractObjectType.circle_object;            //variable for store the enum [ circle ] Abstract
+            var l_circle_san = enums.SandboxUnlock.un_circle;                   //variable for store the enum [ circle ] Unlock
+            var l_circle_abs = enums.AbstractObjectType.obj_circle;             //variable for store the enum [ circle ] Abstract
 
-            MultiplayerUnlocks.ItemUnlockList.Add(l_circle_san);                        //add to the list
+            MultiplayerUnlocks.ItemUnlockList.Add(l_circle_san);                //add to the list
 
 
         }
 
         #endregion
-        #region circle_spawn
+        #region spawqn_circle
 
         //handle the spawner
         private void spawn_circle(On.SandboxGameSession.orig_SpawnItems orig, SandboxGameSession self, IconSymbol.IconSymbolData data, WorldCoordinate pos, EntityID entityID)
         {
 
-            var absol = _enum.enum_.AbstractObjectType.circle_object;           //variable for the abstract object
+            var absol = enums.AbstractObjectType.obj_circle;           //variable for the abstract object
 
             if (data.itemType == absol)
             {
 
-                var abs_object = new circle_abstract(self.game.world, pos, entityID);
+                var abs_object = new abs_circle(self.game.world, pos, entityID);
 
                 self.game.world.GetAbstractRoom(0).AddEntity(abs_object);
 
@@ -203,7 +217,7 @@ namespace Fisobed_v2
         }
 
         #endregion
-        #region grab_the_crap
+        #region grab the crap
 
         //allow you to pick this most crap ever
         private Player.ObjectGrabability grab_the_crap(On.Player.orig_Grabability orig, Player self, PhysicalObject obj)
@@ -219,6 +233,53 @@ namespace Fisobed_v2
             return orig(self, obj);
 
         }
+
+        #endregion
+
+        #endregion
+        #region glowing sait
+
+        #region init_custom_template
+
+        //a template
+        private void init_custom_template(On.StaticWorld.orig_InitCustomTemplates orig)
+        {
+
+            orig();                                                                                                         //orig
+
+            var sait_type = TT_sait.TT_glow_sait;                                                                    //the CreatureTemplate.Type of sait
+            var sait_ancestor = StaticWorld.GetCreatureTemplate(CreatureTemplate.Type.TubeWorm);                            //get the creature template
+            var sait_relationaship = new CreatureTemplate.Relationship(CreatureTemplate.Relationship.Type.Ignores, 0f);     //get the Relationaship from the creature
+
+            var tile_res = new List<TileTypeResistance>();                                                                  //get the tile resistance
+            var tile_con = new List<TileConnectionResistance>();                                                            //get the tile connection resistance
+
+            var sait = new sait.T_sait(sait_type, sait_ancestor, tile_res, tile_con, sait_relationaship);              //THE SAIT
+
+            StaticWorld.creatureTemplates[sait_type.Index] = sait;
+
+        }
+
+        #endregion
+        #region unlock_sait
+
+        private bool unlock_sait(On.MultiplayerUnlocks.orig_SandboxItemUnlocked orig, MultiplayerUnlocks self, MultiplayerUnlocks.SandboxUnlockID unlockID)
+        {
+
+            var locked = enums.SandboxUnlock.un_glow_sait;                //variable that makes reference of the SandboxUnlock
+
+            if (unlockID == locked)                                             //if this [ unlockedID ] its equal to [ locked ]
+            {
+
+                return true;
+
+            }
+
+            return orig(self, unlockID);                                        //calls the orig
+
+        }
+
+        #endregion
 
         #endregion
 

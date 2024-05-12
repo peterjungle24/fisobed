@@ -1,22 +1,14 @@
 ﻿#region using
 
 using BepInEx;
-using _enum;
 using RWCustom;
 using UnityEngine;
-using Mono.Cecil.Cil;
-using MonoMod.Cil;
 using Random = UnityEngine.Random;
-using DevInterface;
-using Fisobs.Core;
-using Fisobs.Creatures;
-using Fisobs.Sandbox;
-using Fisobs.Items;
-using Fisobs.Properties;
 using MoreSlugcats;
 using System.IO;
-using Fisobed_v2;
+using main;
 using System;
+using BepInEx.Logging;
 
 #endregion
 
@@ -30,6 +22,9 @@ namespace circle
         private Vector2 lastRotation;
         private Vector2? setRotation;
 
+        #region ctor of my circle. will have a [ ctor_ ]
+
+        //ctor of my Circle.
         public Circle(AbstractPhysicalObject abstractPhysicalObject, Vector2 lastRotation = default, Vector2 rotation = default, Vector2? setRotation = null) : base(abstractPhysicalObject)
         {
 
@@ -37,8 +32,8 @@ namespace circle
             bodyChunks[0] = new BodyChunk(this, 0, new Vector2(0f, 0f), 8f, 0.2f);
             bodyChunkConnections = new BodyChunkConnection[0];
             airFriction = 0.999f;
-            gravity = 0.1f;
-            bounce = 0.4f;
+            gravity = 1f;
+            bounce = 1f;
             surfaceFriction = 0.4f;
             collisionLayer = 2;
             waterFriction = 0.98f;
@@ -53,26 +48,46 @@ namespace circle
 
         }
 
+        #endregion
+        #region can be throwed by Player. Empty
+
+        //can be throwed by Player. Empty
         public void ThrowByPlayer()
         {
         }
 
-        public Vector2? GetSetRotation() => setRotation;    //set rottate
+        #endregion
+        
+        #region get; set;
+        
+        //get and set the rotation...? idk more
+        public Vector2? GetSetRotation() => setRotation;
 
+        //set the rotation.
         public void SetSetRotation(Vector2? value) => setRotation = value;
 
-        public Vector2 GetLastRotation() => lastRotation;   //last rotate
+        //get the last rotation.
+        public Vector2 GetLastRotation() => lastRotation;
 
+        //set the last rotation
         public void SetLastRotation(Vector2 value) => lastRotation = value;
 
-        public Vector2 GetRotation() => rotation;   //rotate
+        //get the rotation..
+        public Vector2 GetRotation() => rotation;
 
+        //set the rotation
         public void SetRotation(Vector2 value) => rotation = value;
 
+        //dark.
+        public float LastDarkness { get; set; }
 
-        public float LastDarkness { get; set; }     //dark :/
-        public float Darkness { get; set; }         //last dark :3
+        //dark.
+        public float Darkness { get; set; }
+        #endregion
 
+        #region place in a rom
+
+        //place the object in a room
         public override void PlaceInRoom(Room placeRoom)
         {
 
@@ -85,15 +100,23 @@ namespace circle
 
         }
 
+        #endregion
+        #region Initiate the sprites.
+
+        //initiate the sprites
         public void InitiateSprites(RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam)
         {
 
             sLeaser.sprites = new FSprite[1];
-            sLeaser.sprites[0] = new FSprite(Fisobed_v2.Plugin.ION, true);
+            sLeaser.sprites[0] = new FSprite(main.Plugin.ION, true);
             AddToContainer(sLeaser, rCam, null);    //why, bro
 
         }
 
+        #endregion
+        #region draw the sprites.
+
+        //draw the sprites here. i literally understood almost nothing here.
         public void DrawSprites(RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, float timeStacker, Vector2 camPos)
         {
 
@@ -117,7 +140,7 @@ namespace circle
                 sLeaser.sprites[i].x = vector.x - camPos.x;
                 sLeaser.sprites[i].y = vector.y - camPos.y;
                 sLeaser.sprites[i].rotation = Custom.VecToDeg(v);
-                sLeaser.sprites[0].element = Futile.atlasManager.GetElementWithName(Fisobed_v2.Plugin.ION);
+                sLeaser.sprites[0].element = Futile.atlasManager.GetElementWithName(main.Plugin.ION);
 
             }
 
@@ -143,15 +166,23 @@ namespace circle
 
         }
 
+        #endregion
+        #region apply palettes
+
+        //apply the palettes.
         public void ApplyPalette(RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, RoomPalette palette)
         {
 
-            color = Color.Lerp(new Color(255, 255, 255), palette.blackColor, Darkness);
+            color = UnityEngine.Color.Lerp(new Color(255, 255, 255), palette.blackColor, Darkness);
 
             sLeaser.sprites[0].color = color;
 
         }
 
+        #endregion
+        #region add to te container.
+
+        //add to the container
         public void AddToContainer(RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, FContainer newContatiner)
         {
 
@@ -165,6 +196,8 @@ namespace circle
             }
 
         }
+
+        #endregion
 
     }
 

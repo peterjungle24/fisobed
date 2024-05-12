@@ -1,14 +1,10 @@
 ﻿#region using
 
 using BepInEx.Logging;
-using _enum;
+using main;
 using RWCustom;
 using UnityEngine;
-using Mono.Cecil.Cil;
-using MonoMod.Cil;
-using Random = UnityEngine.Random;
 using BepInEx;
-using DevInterface;
 using Fisobs.Core;
 using Fisobs.Creatures;
 using Fisobs.Sandbox;
@@ -22,13 +18,19 @@ using SandboxUnlock = Fisobs.Sandbox.SandboxUnlock;
 namespace circle
 {
 
-    public class circle_abstract : AbstractPhysicalObject
+    public class abs_circle : AbstractPhysicalObject
     {
 
-        public circle_abstract(World world, WorldCoordinate pos, EntityID ID) : base(world, _enum.enum_.AbstractObjectType.circle_object, null, pos, ID)
+        #region ctor
+
+        public abs_circle(World world, WorldCoordinate pos, EntityID ID) : base(world, main.enums.AbstractObjectType.obj_circle, null, pos, ID)
         {
         }
 
+        #endregion
+        #region realize.
+
+        //realize.
         public override void Realize()
         {
 
@@ -37,12 +39,18 @@ namespace circle
 
         }
 
-        public class circle_abstract_type
+        #endregion
+        #region abstract type Circle
+
+        //abstract type
+        public class absT_Circle
         {
 
-            public static AbstractPhysicalObject.AbstractObjectType circle_absType = new(nameof(circle_absType), true);
+            public static AbstractPhysicalObject.AbstractObjectType absT_circle = new("absT_circle", true);
 
         }
+
+        #endregion
 
     }
 

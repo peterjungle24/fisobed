@@ -1,17 +1,10 @@
 ﻿#region using
 
 using BepInEx.Logging;
-using Vector2 = UnityEngine.Vector2;
-using _enum;
 using RWCustom;
 using UnityEngine;
-using Mono.Cecil.Cil;
-using MonoMod.Cil;
-using Random = UnityEngine.Random;
 using BepInEx;
-using DevInterface;
 using CreatureType = CreatureTemplate.Type;
-using static PathCost.Legality;
 using Fisobs.Core;
 using Fisobs.Creatures;
 using Fisobs.Sandbox;
@@ -19,32 +12,30 @@ using Fisobs.Items;
 using Fisobs.Properties;
 using System.Runtime.CompilerServices;
 using MoreSlugcats;
-using HUD;
 using circle;
-using System.Drawing;
 
 #endregion
 
-namespace _enum
+namespace main
 {
 
-    public static class enum_
+    public static class enums
     {
 
         //adds the Sandbox Unlocks maybe.
         public static class SandboxUnlock
         {
 
-            public static readonly MultiplayerUnlocks.SandboxUnlockID circle_sandbox = new("circle_IDK", true);    //add [ circle_sandbox ]
+            public static readonly MultiplayerUnlocks.SandboxUnlockID un_circle = new("un_circle", true);               //add the unlock for [ circle_sandbox ]
+            public static readonly MultiplayerUnlocks.SandboxUnlockID un_glow_sait = new("un_glow_sait", true);         //add the unlock for [ glow_sait ]
 
         }
-
 
         //adds the Abstract Objects maybe...
         public static class AbstractObjectType
         {
 
-            public static readonly AbstractPhysicalObject.AbstractObjectType circle_object = new("circle_IDK", true);   //add [ circle_object ]
+            public static readonly AbstractPhysicalObject.AbstractObjectType obj_circle = new("un_circle", true);       //add [the AbstractObjectType of [ circle_object ]
 
         }
 
