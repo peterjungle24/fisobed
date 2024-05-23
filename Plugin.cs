@@ -11,6 +11,7 @@ using System.Collections.Generic;
 namespace main
 {
 
+
     [BepInPlugin(PLUGIN_GUID, PLUGIN_NAME, PLUGIN_VERSION)]
     public class Plugin : BaseUnityPlugin
     {
@@ -29,6 +30,7 @@ namespace main
             //base
 
             Logger = base.Logger;                                                   //logger
+            //File.WriteAllText("slugg.txt", "");
             On.RainWorld.OnModsInit += RainWorld_OnModsInit;                        //logs on the initialize.
             
             //circle
@@ -43,10 +45,22 @@ namespace main
 
             //sait
 
-            On.StaticWorld.InitCustomTemplates += init_custom_template;
-            On.MultiplayerUnlocks.SandboxItemUnlocked += unlock_sait;
+            On.StaticWorld.InitCustomTemplates += init_custom_template;             //init the custom palette for spawn i guess
+            On.StaticWorld.InitStaticWorld += init_static_world;                    //init the static world for add to the list 
+            On.MultiplayerUnlocks.UnlockedCritters += unlock_sait;                  //creates a unlock for Sait
+            On.RainWorld.Awake += awake_sait;                                       //add to the CreatureUnlock list
+            On.CreatureSymbol.SpriteNameOfCreature += sprite_sait;                  //add the TubeWorm sandbox icon to the unlock.
+
+            //sait - TubeWormGraphics
+
+            On.TubeWormGraphics.ApplyPalette += H_sait.tubeworm_applyP;             //apply the palette to the sprite.
+            On.TubeWormGraphics.InitiateSprites += H_sait.tubeworm_initS;           //initiate the sprites for initiate the sprites and work
+            On.TubeWormGraphics.DrawSprites += H_sait.tubeworm_drawS;               //Draw sprites.
+            On.TubeWormGraphics.ctor += H_sait.tubeworm_ctor;                       //ctor
+            On.TubeWormGraphics.AddToContainer += H_sait.tubeworm_container;
 
         }
+
 
         #region RainWorld.OnModsInit
 
@@ -135,16 +149,16 @@ namespace main
         private bool ahh(On.MultiplayerUnlocks.orig_SandboxItemUnlocked orig, MultiplayerUnlocks self, MultiplayerUnlocks.SandboxUnlockID unlockID)
         {
 
-            var locked = enums.SandboxUnlock.un_circle;              //variable that makes refernece of the SandboxUnlock
+            var locked = enums.SandboxUnlock.un_circle;     //variable that makes refernece of the SandboxUnlock
 
-            if (unlockID == locked)                                             //if this [ unlockedID ] its equal to [ locked ]
+            if (unlockID == locked)                         //if this [ unlockedID ] its equal to [ locked ]
             {
 
-                return true;                                                    //return True
+                return true;                                //return True
 
             }
 
-            return orig(self, unlockID);                                        //orig
+            return orig(self, unlockID);                    //orig
 
         }
 
@@ -187,7 +201,6 @@ namespace main
             orig(self);     //CALLS THIS ORIG BEFORE THE LIST
 
             var l_circle_san = enums.SandboxUnlock.un_circle;                   //variable for store the enum [ circle ] Unlock
-            var l_circle_abs = enums.AbstractObjectType.obj_circle;             //variable for store the enum [ circle ] Abstract
 
             MultiplayerUnlocks.ItemUnlockList.Add(l_circle_san);                //add to the list
 
@@ -239,43 +252,157 @@ namespace main
         #endregion
         #region glowing sait
 
+        #region awake_sait
+
+        /// <summary>
+        /// unlock awake process for Sait
+        /// </summary>
+        /// <param name="orig"></param>
+        /// <param name="self"></param>
+        private void awake_sait(On.RainWorld.orig_Awake orig, RainWorld self)
+        {
+
+            try
+            {
+
+                orig(self);
+
+                //UNLOCK IDS NEED TO BE SAME CREATURETEMPLATE.TYPE IN STRINGS 
+                var saited = enums.SandboxUnlock.un_glow_sait;                  //variable for store the enum [ glow_sait ] Unlock
+                MultiplayerUnlocks.CreatureUnlockList.Add(saited);              //add to the list
+
+            }
+            catch (Exception ex)
+            {
+
+                Logger.LogError("Index was bounds of the array or somethin!");
+                Logger.LogError("exception from Catch: " + ex);
+
+            }
+
+        }
+
+        #endregion
+        #region sprite_sait
+
+        /// <summary>
+        /// add the Icon sprite to the Icon sandbox unlock of Sait wqowowoowowoow
+        /// </summary>
+        /// <param name="orig"></param>
+        /// <param name="iconData"></param>
+        /// <returns></returns>
+        private string sprite_sait(On.CreatureSymbol.orig_SpriteNameOfCreature orig, IconSymbol.IconSymbolData iconData)
+        {
+
+            var saited = TT_sait.TT_glow_sait;      //assign the CreatureTemplate.Type for the variable.
+
+            //add the Sait for the critType on IconData
+            if (iconData.critType == saited)
+            {
+
+                Logger.LogInfo("killed the tubeworm. poor sait\nwait, WHERE ARE MY AIR FRYER?????");
+                return "Kill_Tubeworm";     //i think it will add the Unlock icon.
+
+            }
+
+            return orig(iconData);
+
+        }
+
+        #endregion
         #region init_custom_template
 
         //a template
         private void init_custom_template(On.StaticWorld.orig_InitCustomTemplates orig)
         {
 
-            orig();                                                                                                         //orig
+            try
+            {
 
-            var sait_type = TT_sait.TT_glow_sait;                                                                    //the CreatureTemplate.Type of sait
-            var sait_ancestor = StaticWorld.GetCreatureTemplate(CreatureTemplate.Type.TubeWorm);                            //get the creature template
-            var sait_relationaship = new CreatureTemplate.Relationship(CreatureTemplate.Relationship.Type.Ignores, 0f);     //get the Relationaship from the creature
+                var sait_type = TT_sait.TT_glow_sait;                                                                    //the CreatureTemplate.Type of sait
 
-            var tile_res = new List<TileTypeResistance>();                                                                  //get the tile resistance
-            var tile_con = new List<TileConnectionResistance>();                                                            //get the tile connection resistance
+                Logger.LogInfo("Expected array length:  " + CreatureTemplate.Type.values.Count);
 
-            var sait = new sait.T_sait(sait_type, sait_ancestor, tile_res, tile_con, sait_relationaship);              //THE SAIT
+                orig();                                                                                                         //orig
 
-            StaticWorld.creatureTemplates[sait_type.Index] = sait;
+                Logger.LogInfo("sait_type.index : " + sait_type.index);
+                Logger.LogInfo("sait_type.Index (capitalized) : " + sait_type.Index);
+                Logger.LogInfo("StaticWorld.creatureTemplates.Length: " + StaticWorld.creatureTemplates.Length);
+
+                var sait_ancestor = StaticWorld.GetCreatureTemplate(CreatureTemplate.Type.TubeWorm);                            //get the creature template
+                var sait_relationaship = new CreatureTemplate.Relationship(CreatureTemplate.Relationship.Type.Ignores, 0f);     //get the Relationaship from the creature
+
+                var tile_res = new List<TileTypeResistance>();                                                                  //get the tile resistance
+                var tile_con = new List<TileConnectionResistance>();                                                            //get the tile connection resistance
+
+                var sait = new sait.T_sait(sait_type, sait_ancestor, tile_res, tile_con, sait_relationaship);              //THE SAIT
+
+                StaticWorld.creatureTemplates[sait_type.Index] = sait;
+
+            }
+            catch(Exception me)
+            {
+
+                Logger.LogError("TryCatch from [ init_custom_template ] was FAILED");
+                Logger.LogError(me);
+                Logger.LogError(me.StackTrace);
+
+            }
+
+        }
+
+        #endregion
+        #region init static  world
+
+        private void init_static_world(On.StaticWorld.orig_InitStaticWorld orig)
+        {
+
+            var tt_sait = sait.TT_sait.TT_glow_sait;
+
+            Logger.LogInfo("Expected array length:  " + CreatureTemplate.Type.values.Count);
+
+            orig();
 
         }
 
         #endregion
         #region unlock_sait
 
-        private bool unlock_sait(On.MultiplayerUnlocks.orig_SandboxItemUnlocked orig, MultiplayerUnlocks self, MultiplayerUnlocks.SandboxUnlockID unlockID)
+        /// <summary>
+        /// Add the unlock for Sait
+        /// </summary>
+        /// <param name="orig"></param>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        private List<CreatureTemplate.Type> unlock_sait(On.MultiplayerUnlocks.orig_UnlockedCritters orig, MultiplayerUnlocks.LevelUnlockID ID)
         {
 
-            var locked = enums.SandboxUnlock.un_glow_sait;                //variable that makes reference of the SandboxUnlock
+            var saited = TT_sait.TT_glow_sait;  //add the Sait template here
 
-            if (unlockID == locked)                                             //if this [ unlockedID ] its equal to [ locked ]
+            Logger.LogInfo("saited before: " + saited.Index);
+
+            //Get list returned by orig containing unlocked CreatureTemplate.Types for a particular unlock group identified by ID
+            List<CreatureTemplate.Type> list = orig(ID);
+
+            //Check for the ground that contains the TubeWorm
+            if (ID == MultiplayerUnlocks.LevelUnlockID.Default)
             {
 
-                return true;
+                //Add my custom TubeWorm template to the list
+                list.Add(saited);
+                Logger.LogInfo("SAIT UNLOCK >>>> Saited");
+
+            }
+            else
+            {
+
+                Logger.LogError("SAIT UNLOCK >>>> No Saited sadly");
 
             }
 
-            return orig(self, unlockID);                                        //calls the orig
+            Logger.LogInfo("saited after: " + saited.Index);
+
+            return list;
 
         }
 

@@ -31,11 +31,20 @@
 	  <Reference Include="Assembly-CSharp">
 	    <HintPath>lib\PUBLIC-Assembly-CSharp.dll</HintPath>
 	  </Reference>
+	  <Reference Include="Unity.Mathematics">
+	    <HintPath>..\..\Pictures\Camera Roll\NÃO\Caralh\Rain World\Programação\C#\Death\DLL\Unity.Mathematics.dll</HintPath>
+	  </Reference>
 	  <Reference Include="UnityEngine">
 	    <HintPath>lib\UnityEngine.dll</HintPath>
 	  </Reference>
 	  <Reference Include="UnityEngine.CoreModule">
 	    <HintPath>lib\UnityEngine.CoreModule.dll</HintPath>
+	  </Reference>
+	  <Reference Include="UnityEngine.InputLegacyModule">
+	    <HintPath>..\..\Pictures\Camera Roll\NÃO\Caralh\Rain World\Programação\C#\Death\DLL\UnityEngine.InputLegacyModule.dll</HintPath>
+	  </Reference>
+	  <Reference Include="UnityEngine.InputModule">
+	    <HintPath>..\..\Pictures\Camera Roll\NÃO\Caralh\Rain World\Programação\C#\Death\DLL\UnityEngine.InputModule.dll</HintPath>
 	  </Reference>
 	</ItemGroup>
 

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.IO;
 
 namespace help
 {
@@ -7,6 +8,12 @@ namespace help
     public class files
     {
 
+        /// <summary>
+        /// Get the image file for use and load it
+        /// </summary>
+        /// <param name="elementName"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static string GetProperElementName(string elementName)
         {
 

@@ -27,7 +27,7 @@ namespace main
         {
 
             public static readonly MultiplayerUnlocks.SandboxUnlockID un_circle = new("un_circle", true);               //add the unlock for [ circle_sandbox ]
-            public static readonly MultiplayerUnlocks.SandboxUnlockID un_glow_sait = new("un_glow_sait", true);         //add the unlock for [ glow_sait ]
+            public static readonly MultiplayerUnlocks.SandboxUnlockID un_glow_sait = new("glow_sait", true);           //add the unlock for [ glow_sait ]
 
         }
 

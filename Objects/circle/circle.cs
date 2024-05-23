@@ -1,16 +1,7 @@
-﻿#region using
-
-using BepInEx;
-using RWCustom;
+﻿using RWCustom;
+using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
-using MoreSlugcats;
-using System.IO;
-using main;
-using System;
-using BepInEx.Logging;
-
-#endregion
 
 namespace circle
 {
@@ -22,9 +13,17 @@ namespace circle
         private Vector2 lastRotation;
         private Vector2? setRotation;
 
-        #region ctor of my circle. will have a [ ctor_ ]
+        //idk
 
-        //ctor of my Circle.
+        #region the ctor and something more
+
+        /// <summary>
+        /// ctor of my Circle.
+        /// </summary>
+        /// <param name="abstractPhysicalObject"> the object</param>
+        /// <param name="lastRotation"> last rotation. </param>
+        /// <param name="rotation"> rotation </param>
+        /// <param name="setRotation"> set the rotation </param>
         public Circle(AbstractPhysicalObject abstractPhysicalObject, Vector2 lastRotation = default, Vector2 rotation = default, Vector2? setRotation = null) : base(abstractPhysicalObject)
         {
 
@@ -48,18 +47,19 @@ namespace circle
 
         }
 
-        #endregion
-        #region can be throwed by Player. Empty
-
-        //can be throwed by Player. Empty
+        /// <summary>
+        /// can be throwed by Player. It's empty
+        /// </summary>
         public void ThrowByPlayer()
         {
         }
 
         #endregion
-        
+
+        //variables
+
         #region get; set;
-        
+
         //get and set the rotation...? idk more
         public Vector2? GetSetRotation() => setRotation;
 
@@ -85,9 +85,12 @@ namespace circle
         public float Darkness { get; set; }
         #endregion
 
-        #region place in a rom
+        //method
 
-        //place the object in a room
+        /// <summary>
+        /// place the object in a room
+        /// </summary>
+        /// <param name="placeRoom"> room for place the object </param>
         public override void PlaceInRoom(Room placeRoom)
         {
 
@@ -100,10 +103,14 @@ namespace circle
 
         }
 
-        #endregion
-        #region Initiate the sprites.
 
-        //initiate the sprites
+        //IDrawable methods
+
+        /// <summary>
+        /// initiate the sprites of the object
+        /// </summary>
+        /// <param name="sLeaser"> sLeaser for point to a sprite i guess. </param>
+        /// <param name="rCam"> Room Camera for the camera to the room.... </param>
         public void InitiateSprites(RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam)
         {
 
@@ -113,10 +120,14 @@ namespace circle
 
         }
 
-        #endregion
-        #region draw the sprites.
 
-        //draw the sprites here. i literally understood almost nothing here.
+        /// <summary>
+        /// draw the sprites here. i literally understood almost nothing here.
+        /// </summary>
+        /// <param name="sLeaser"></param>
+        /// <param name="rCam"></param>
+        /// <param name="timeStacker"></param>
+        /// <param name="camPos"></param>
         public void DrawSprites(RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, float timeStacker, Vector2 camPos)
         {
 
@@ -166,10 +177,13 @@ namespace circle
 
         }
 
-        #endregion
-        #region apply palettes
 
-        //apply the palettes.
+        /// <summary>
+        /// apply to Palette.
+        /// </summary>
+        /// <param name="sLeaser"></param>
+        /// <param name="rCam"></param>
+        /// <param name="palette"></param>
         public void ApplyPalette(RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, RoomPalette palette)
         {
 
@@ -179,10 +193,13 @@ namespace circle
 
         }
 
-        #endregion
-        #region add to te container.
 
-        //add to the container
+        /// <summary>
+        /// add to the container
+        /// </summary>
+        /// <param name="sLeaser"></param>
+        /// <param name="rCam"></param>
+        /// <param name="newContatiner"></param>
         public void AddToContainer(RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, FContainer newContatiner)
         {
 
@@ -196,8 +213,6 @@ namespace circle
             }
 
         }
-
-        #endregion
 
     }
 
