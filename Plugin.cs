@@ -10,12 +10,9 @@ using System.Collections.Generic;
 
 namespace main
 {
-
-
     [BepInPlugin(PLUGIN_GUID, PLUGIN_NAME, PLUGIN_VERSION)]
     public class Plugin : BaseUnityPlugin
     {
-
         public const string PLUGIN_GUID = "slugg.fisobs.mod";
         public const string PLUGIN_NAME = "fisobed 2.0";
         public const string PLUGIN_VERSION = "1.0.1";
@@ -26,7 +23,6 @@ namespace main
 
         public void OnEnable()
         {
-
             //base
 
             Logger = base.Logger;                                                   //logger
@@ -67,7 +63,6 @@ namespace main
         //logs on the initialize.
         private void RainWorld_OnModsInit(On.RainWorld.orig_OnModsInit orig, RainWorld self)
         {
-
             orig(self);
 
             Logger.LogInfo("its actived? great ----------------------------");
@@ -82,7 +77,6 @@ namespace main
         //load the image before this thing can be used
         private void load_image(On.RainWorld.orig_OnModsInit orig, RainWorld self)
         {
-
             orig(self);                                                                                 //call the orig before of all
             ION = Path.Combine("icons", "item_circle_icon");                                            //a string variable for specify the path. WAS A HELL FOR THIS IMAGE WORK
 
