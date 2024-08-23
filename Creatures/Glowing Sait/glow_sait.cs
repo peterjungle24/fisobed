@@ -16,6 +16,7 @@ namespace sait
     public static class TT_sait
     {
 
+        //If you use the same string name, you can use it like ID in World File [ world_PD.txt ]
         public static readonly CreatureTemplate.Type TT_glow_sait = new CreatureTemplate.Type("glow_sait", true);
 
     }
@@ -32,9 +33,9 @@ namespace sait
 
             this.name = "Glowing Sait";
             this.AI = true;
-            this.canFly = false;
+            this.canFly = true;
             this.canSwim = false;
-            this.grasps = 0;
+            this.grasps = 1;
 
             base.shortcutColor = Color.green;
             base.smallCreature = true;
@@ -87,8 +88,13 @@ namespace sait
 
             orig(self, sLeaser, rCam, palette);                                         //call the orig
 
-            sLeaser.sprites[0].color = new Color(0.6666667f, 0.94509804f, 0.3372549f);  //change color?
-            sLeaser.sprites[sLeaser.sprites.Length - 1].color = Color.black;            //i think it changess the color here too
+            if (self.worm.Template.type == TT_sait.TT_glow_sait)
+            {
+
+                sLeaser.sprites[0].color = new Color(0.6666667f, 0.94509804f, 0.3372549f);  //change color?
+                sLeaser.sprites[sLeaser.sprites.Length - 1].color = Color.black;            //i think it changess the color here too
+
+            }
 
         }
 
@@ -116,12 +122,18 @@ namespace sait
         {
 
             orig.Invoke(self, sLeaser, rCam);
-            Array.Resize<FSprite>(ref sLeaser.sprites, sLeaser.sprites.Length + 1);
-            sLeaser.sprites[sLeaser.sprites.Length - 1] = new FSprite("FaceB0", true);
-            sLeaser.sprites[sLeaser.sprites.Length - 1].color = new Color(160, 2, 2);
-            sLeaser.sprites[sLeaser.sprites.Length - 1].scale = 1.3f;
-            sLeaser.sprites[0].shader = FShader.defaultShader;
-            rCam.ReturnFContainer("Midground").AddChild(sLeaser.sprites[sLeaser.sprites.Length - 1]);
+
+            if (self.worm.Template.type == TT_sait.TT_glow_sait)
+            {
+
+                Array.Resize<FSprite>(ref sLeaser.sprites, sLeaser.sprites.Length + 1);
+                sLeaser.sprites[sLeaser.sprites.Length - 1] = new FSprite("FaceB0", true);
+                sLeaser.sprites[sLeaser.sprites.Length - 1].color = new Color(160, 2, 2);
+                sLeaser.sprites[sLeaser.sprites.Length - 1].scale = 1.3f;
+                sLeaser.sprites[0].shader = FShader.defaultShader;
+                rCam.ReturnFContainer("Midground").AddChild(sLeaser.sprites[sLeaser.sprites.Length - 1]);
+
+            }
 
         }
 
@@ -139,9 +151,14 @@ namespace sait
 
             orig.Invoke(self, sLeaser, rCam, timeStacker, camPos);
 
-            sLeaser.sprites[0].alpha = 1f;
-            sLeaser.sprites[sLeaser.sprites.Length - 1].SetPosition((Vector2.Lerp(self.bodyParts[2].lastPos, self.bodyParts[2].pos, timeStacker) + Vector2.Lerp(self.bodyParts[1].lastPos, self.bodyParts[1].pos, timeStacker)) / 2f - camPos);
-            sLeaser.sprites[sLeaser.sprites.Length - 1].MoveToFront();
+            if (self.worm.Template.type == TT_sait.TT_glow_sait)
+            {
+
+                sLeaser.sprites[0].alpha = 1f;
+                sLeaser.sprites[sLeaser.sprites.Length - 1].SetPosition((Vector2.Lerp(self.bodyParts[2].lastPos, self.bodyParts[2].pos, timeStacker) + Vector2.Lerp(self.bodyParts[1].lastPos, self.bodyParts[1].pos, timeStacker)) / 2f - camPos);
+                sLeaser.sprites[sLeaser.sprites.Length - 1].MoveToFront();
+
+            }
 
         }
 

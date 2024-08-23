@@ -1,18 +1,25 @@
-﻿using RWCustom;
-using System;
+﻿using System;
+using BepInEx;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
-namespace circle
+namespace Item
 {
 
-    public class Circle : PlayerCarryableItem, IDrawable
+    public class item_noIdea : PlayerCarryableItem, IDrawable
     {
 
         private Vector2 rotation;
         private Vector2 lastRotation;
         private Vector2? setRotation;
-
+        public Vector2? GetSetRotation() => setRotation;
+        public void SetSetRotation(Vector2? value) => setRotation = value;
+        public Vector2 GetLastRotation() => lastRotation;
+        public void SetLastRotation(Vector2 value) => lastRotation = value;
+        public Vector2 GetRotation() => rotation;
+        public void SetRotation(Vector2 value) => rotation = value;
+        public float LastDarkness { get; set; }
+        public float Darkness { get; set; }
+        
         /// <summary>
         /// ctor of my Circle.
         /// </summary>
@@ -20,7 +27,7 @@ namespace circle
         /// <param name="lastRotation"> last rotation. </param>
         /// <param name="rotation"> rotation </param>
         /// <param name="setRotation"> set the rotation </param>
-        public Circle(AbstractPhysicalObject abstractPhysicalObject, Vector2 lastRotation = default, Vector2 rotation = default, Vector2? setRotation = null) : base(abstractPhysicalObject)
+        public item_noIdea(AbstractPhysicalObject abstractPhysicalObject, Vector2 lastRotation = default, Vector2 rotation = default, Vector2? setRotation = null) : base(abstractPhysicalObject)
         {
 
             bodyChunks = new BodyChunk[1];
@@ -35,10 +42,6 @@ namespace circle
             buoyancy = 0.4f;
             firstChunk.loudness = 7f;
 
-            SetLastRotation(lastRotation);
-            SetRotation(rotation);
-            SetSetRotation(setRotation);
-
         }
 
         /// <summary>
@@ -48,36 +51,6 @@ namespace circle
         {
         }
 
-        //variables
-
-        #region get; set;
-
-        //get and set the rotation...? idk more
-        public Vector2? GetSetRotation() => setRotation;
-
-        //set the rotation.
-        public void SetSetRotation(Vector2? value) => setRotation = value;
-
-        //get the last rotation.
-        public Vector2 GetLastRotation() => lastRotation;
-
-        //set the last rotation
-        public void SetLastRotation(Vector2 value) => lastRotation = value;
-
-        //get the rotation..
-        public Vector2 GetRotation() => rotation;
-
-        //set the rotation
-        public void SetRotation(Vector2 value) => rotation = value;
-
-        //dark.
-        public float LastDarkness { get; set; }
-
-        //dark.
-        public float Darkness { get; set; }
-        #endregion
-
-        //method
 
         /// <summary>
         /// place the object in a room
@@ -105,13 +78,11 @@ namespace circle
         /// <param name="rCam"> Room Camera for the camera to the room.... </param>
         public void InitiateSprites(RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam)
         {
-
             sLeaser.sprites = new FSprite[1];
-            sLeaser.sprites[0] = new FSprite(main.Plugin.ION, true);
-            AddToContainer(sLeaser, rCam, null);    //why, bro
-
+            sLeaser.sprites[0] = new FSprite("Futile_White", true);
+         
+            AddToContainer(sLeaser, rCam, null);
         }
-
 
         /// <summary>
         /// draw the sprites here. i literally understood almost nothing here.
@@ -135,38 +106,8 @@ namespace circle
 
                 ApplyPalette(sLeaser, rCam, rCam.currentPalette);
 
-            }
-
-            for (int i = 0; i < Math.Min(4, sLeaser.sprites.Length); i++)
-            {
-
-                sLeaser.sprites[i].x = vector.x - camPos.x;
-                sLeaser.sprites[i].y = vector.y - camPos.y;
-                sLeaser.sprites[i].rotation = Custom.VecToDeg(v);
-                sLeaser.sprites[0].element = Futile.atlasManager.GetElementWithName(main.Plugin.ION);
 
             }
-
-            if (blink > 0 && Random.value < 0.5f)
-            {
-
-                sLeaser.sprites[0].color = blinkColor;
-
-            }
-            else
-            {
-
-                sLeaser.sprites[0].color = color;                       //sus
-
-            }
-
-            if (slatedForDeletetion || room != rCam.room)
-            {
-
-                sLeaser.CleanSpritesAndRemove();
-
-            }
-
         }
 
 
@@ -178,14 +119,9 @@ namespace circle
         /// <param name="palette"></param>
         public void ApplyPalette(RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, RoomPalette palette)
         {
-
             color = UnityEngine.Color.Lerp(new Color(255, 255, 255), palette.blackColor, Darkness);
-
             sLeaser.sprites[0].color = color;
-
         }
-
-
         /// <summary>
         /// add to the container
         /// </summary>
@@ -194,18 +130,12 @@ namespace circle
         /// <param name="newContatiner"></param>
         public void AddToContainer(RoomCamera.SpriteLeaser sLeaser, RoomCamera rCam, FContainer newContatiner)
         {
-
             newContatiner ??= rCam.ReturnFContainer("Items");
 
             foreach (FSprite fsprite in sLeaser.sprites)
             {
-
                 newContatiner.AddChild(fsprite);
-
             }
-
         }
-
     }
-
 }

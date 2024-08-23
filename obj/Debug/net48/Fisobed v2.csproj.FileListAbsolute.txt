@@ -70,6 +70,3 @@ C:\Users\POSITO\Desktop\Fisobed v2\obj\Debug\net48\Fisobed v2.csproj.CoreCompile
 C:\Users\POSITO\Desktop\Fisobed v2\obj\Debug\net48\Fisobed v2.csproj.CopyComplete
 C:\Users\POSITO\Desktop\Fisobed v2\obj\Debug\net48\Fisobed v2.dll
 C:\Users\POSITO\Desktop\Fisobed v2\obj\Debug\net48\Fisobed v2.pdb
-C:\Users\POSITO\Desktop\Fisobed v2\bin\Debug\net48\Unity.Mathematics.dll
-C:\Users\POSITO\Desktop\Fisobed v2\bin\Debug\net48\UnityEngine.InputLegacyModule.dll
-C:\Users\POSITO\Desktop\Fisobed v2\bin\Debug\net48\UnityEngine.InputModule.dll
