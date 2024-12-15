@@ -1,0 +1,8 @@
+-- Instructions for the mod installation --
+the Source is optional. For the mod, just download the "mod.zip"
+
+> Since theres no workshop of this mod, just move the "fisobed_mod" to "steamapps\common\Rain World\RainWorld_Data\StreamingAssets\mods" 
+for manual instalation
+
+-- For the source --
+just open the "Fisobed v2.csproj", since i just doesnt open by .sln file.
