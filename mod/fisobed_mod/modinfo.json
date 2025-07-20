@@ -1,0 +1,11 @@
+{
+  "id": "slugg.fisobs.mod",
+  "name": "fisobed 2.0",
+  "version": "1.0.1",
+  "target_game_version": "v1.9.15b",
+  "authors": "Slugg",
+  "description": "dont ask",
+  "requirements": [],
+  "tags": [],
+  "checksum_override_version": false
+}
